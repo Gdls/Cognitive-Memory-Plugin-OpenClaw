@@ -1,0 +1,22 @@
+{
+  "name": "openclaw-cogmem",
+  "version": "0.3.0",
+  "description": "OpenClaw adapter that talks to the CogMem sidecar and registers callable memory tools.",
+  "type": "module",
+  "main": "./index.js",
+  "files": [
+    "index.js",
+    "client.js",
+    "tools.js",
+    "openclaw.plugin.json",
+    "README.md",
+    "skill"
+  ],
+  "peerDependencies": {
+    "openclaw": ">=2026.3.0"
+  },
+  "openclaw": {
+    "id": "cogmem",
+    "extensions": ["./index.js"]
+  }
+}

@@ -1,0 +1,8 @@
+dist/
+build/
+*.egg-info/
+src/cogmem_core.egg-info/
+.pytest_cache/
+__pycache__/
+*.pyc
+tests/.tmp/

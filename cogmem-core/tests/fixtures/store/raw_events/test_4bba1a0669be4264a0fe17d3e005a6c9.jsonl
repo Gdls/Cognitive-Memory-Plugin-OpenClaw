@@ -1,0 +1,1 @@
+{"arguments": {}, "event_id": "evt_c294bfcea19147698f6435f25dacd56a", "event_type": "user_message", "metadata": {}, "result": null, "speaker": null, "status": null, "store_policy": "memory_summary", "summary": null, "text": "The deployment target is Docker.", "timestamp": "2026-08-04T07:54:10.859000+00:00", "tool_name": null}

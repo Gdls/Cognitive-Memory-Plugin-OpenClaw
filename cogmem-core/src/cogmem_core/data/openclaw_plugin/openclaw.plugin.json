@@ -1,0 +1,65 @@
+{
+  "id": "cogmem",
+  "name": "CogMem",
+  "description": "Cognitive memory adapter: auto-recall into prompt, ingest OpenClaw turns, and expose callable memory tools.",
+  "version": "0.3.0",
+  "kind": "memory",
+  "categories": ["memory", "tools"],
+  "contracts": {
+    "tools": [
+      "cogmem_search",
+      "cogmem_get",
+      "cogmem_timeline",
+      "cogmem_status",
+      "cogmem_build"
+    ]
+  },
+  "toolMetadata": {
+    "cogmem_search": { "profiles": ["coding"] },
+    "cogmem_get": { "profiles": ["coding"] },
+    "cogmem_timeline": { "profiles": ["coding"] },
+    "cogmem_status": { "profiles": ["coding"] },
+    "cogmem_build": { "profiles": ["coding"] }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "sidecarUrl": {
+        "type": "string",
+        "default": "http://127.0.0.1:8787",
+        "description": "CogMem HTTP sidecar base URL"
+      },
+      "recallConversationId": {
+        "type": "string",
+        "default": "",
+        "description": "Optional CogMem conversation id for recall when the current OpenClaw session is new"
+      },
+      "autoRecall": {
+        "type": "boolean",
+        "default": true,
+        "description": "Inject CogMem context before each prompt"
+      },
+      "autoCapture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Append the finished turn into CogMem"
+      },
+      "autoBuild": {
+        "type": "boolean",
+        "default": true,
+        "description": "Build long-term memory on compaction or session end"
+      },
+      "minPromptLength": {
+        "type": "integer",
+        "default": 4,
+        "description": "Skip recall for very short user prompts"
+      },
+      "timeoutMs": {
+        "type": "integer",
+        "default": 8000,
+        "description": "HTTP timeout for sidecar calls"
+      }
+    }
+  }
+}

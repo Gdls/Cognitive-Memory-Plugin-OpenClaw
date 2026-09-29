@@ -1,0 +1,19 @@
+{
+  "memories": [
+    {
+      "conversation_id": "test_5e45d93f1d6341ce969724db66e61e09",
+      "memory_id": "mem_dd00327827cf",
+      "memory_type": "event",
+      "metadata": {
+        "event_type": "user_message",
+        "speaker": null,
+        "status": null,
+        "store_policy": "memory_summary",
+        "tool_name": null
+      },
+      "source_event_id": "evt_75d8120ec1db4ad582394bf8e34939fe",
+      "text": "The deployment target is Docker.",
+      "timestamp": "2026-08-04T08:26:23.877831+00:00"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "trajectories": [
+    {
+      "conversation_id": "test_3011dec96bc14d33979957019bd4c6ec",
+      "episode_ids": [
+        "ep_c8f8a750d6ca"
+      ],
+      "metadata": {
+        "builder": "conversation_episode_sequence",
+        "episode_count": 1
+      },
+      "relations": [],
+      "summary": "我偏好先给结论再给细节。",
+      "title": "test_3011dec96bc14d33979957019bd4c6ec runtime trajectory",
+      "trajectory_id": "trj_82193fb04618"
+    }
+  ]
+}

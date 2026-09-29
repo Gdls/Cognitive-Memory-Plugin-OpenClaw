@@ -1,0 +1,21 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+*.pyc
+
+# runtime stores
+cogmem_store/
+cogmem_store_*/
+tests/.tmp/
+
+# editor
+.idea/
+.vscode/
+*.swp

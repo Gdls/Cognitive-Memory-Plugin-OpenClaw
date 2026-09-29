@@ -1,0 +1,16 @@
+{
+  "preferences": [
+    {
+      "confidence": 0.3,
+      "content": "我偏好先给结论再给细节。",
+      "conversation_id": "test_6fc655f98e1744739e5c2cc1dccd4120",
+      "evidence_ids": [
+        "mem_83846857f6a9"
+      ],
+      "memory_id": "pref_605e0d40407f",
+      "metadata": {},
+      "preference_type": "preference",
+      "status": "candidate"
+    }
+  ]
+}

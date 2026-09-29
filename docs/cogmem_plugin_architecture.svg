@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">CogMem &#x4E0E; OpenClaw&#xFF1A;&#x4E00;&#x4E2A;&#x7B97;&#x6CD5;&#x6838;&#x5FC3; + &#x4E00;&#x5C42;&#x5E73;&#x53F0;&#x9002;&#x914D;</title>
+  <desc id="desc">OpenClaw Gateway to JS plugin and Python sidecar, then cogmem-core.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748B"/>
+    </marker>
+    <style type="text/css"><![CDATA[
+      .t { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+      .title { font-size: 28px; font-weight: 700; fill: #0F172A; }
+      .small { font-size: 13px; fill: #64748B; }
+      .label { font-size: 16px; font-weight: 650; fill: #0F172A; }
+      .meta { font-size: 13px; fill: #64748B; }
+      .body { font-size: 14px; fill: #334155; }
+      .side { font-size: 15px; font-weight: 700; fill: #FFFFFF; }
+      .side-sub { font-size: 11px; fill: #D9F0E8; }
+      .gold-side { font-size: 15px; font-weight: 700; fill: #FFFFFF; }
+      .gold-sub { font-size: 11px; fill: #F6E7C8; }
+      .card-title { font-size: 16px; font-weight: 700; fill: #8A5A12; }
+      .card-en { font-size: 13px; font-weight: 600; fill: #B45309; }
+      .badge { font-size: 12px; font-weight: 600; fill: #475569; }
+      .foot { font-size: 13px; fill: #64748B; }
+    ]]></style>
+  </defs>
+  <rect width="1280" height="720" fill="#F7F8FA"/>
+  <text x="640" y="42" text-anchor="middle" class="t title">CogMem &#x4E0E; OpenClaw&#xFF1A;&#x4E00;&#x4E2A;&#x7B97;&#x6CD5;&#x6838;&#x5FC3; + &#x4E00;&#x5C42;&#x5E73;&#x53F0;&#x9002;&#x914D;</text>
+  <rect x="168" y="68" width="1040" height="58" rx="16" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="196" y="92" class="t small">&#x5E73;&#x53F0;</text>
+  <text x="688" y="92" text-anchor="middle" class="t label">OpenClaw Gateway</text>
+  <text x="688" y="112" text-anchor="middle" class="t meta">&#x7528;&#x6237; / &#x6A21;&#x578B;</text>
+  <line x1="688" y1="126" x2="688" y2="154" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="662" y="128" width="52" height="20" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="688" y="142" text-anchor="middle" class="t badge">&#x8C03;&#x7528;</text>
+  <rect x="72" y="168" width="1136" height="286" rx="18" fill="#EAF6F1" stroke="#7F9E94" stroke-dasharray="6 5"/>
+  <rect x="72" y="168" width="64" height="286" rx="18" fill="#1F6B57"/>
+  <rect x="104" y="168" width="32" height="286" fill="#1F6B57"/>
+  <text transform="translate(104 311) rotate(-90)" text-anchor="middle" class="t side">&#x5E73;&#x53F0;&#x9002;&#x914D;&#x5C42;</text>
+  <text transform="translate(122 311) rotate(-90)" text-anchor="middle" class="t side-sub">&#x4E0D;&#x8DD1;&#x8BB0;&#x5FC6;&#x7B97;&#x6CD5; &#xB7; &#x53EA;&#x7FFB;&#x8BD1;&#x548C;&#x63A5;&#x7EBF;</text>
+  <rect x="160" y="188" width="1024" height="114" rx="14" fill="#FFFFFF" stroke="#D7E5DF"/>
+  <circle cx="196" cy="226" r="16" fill="#1F6B57"/>
+  <text x="196" y="231" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700" class="t">1</text>
+  <text x="226" y="222" class="t label">&#x5E73;&#x53F0;&#x4FA7; JS &#x63D2;&#x4EF6;</text>
+  <text x="1168" y="222" text-anchor="end" class="t meta">openclaw-cogmem/ &#xB7; &#x968F; wheel &#x6346;&#x7ED1;</text>
+  <text x="226" y="248" class="t body">hook&#xFF1A;&#x53D1;&#x6D88;&#x606F;&#x524D;&#x81EA;&#x52A8;&#x53EC;&#x56DE; &#xB7; &#x56DE;&#x5408;&#x7ED3;&#x675F;&#x5199;&#x5165; &#xB7; compaction &#x65F6;&#x6784;&#x5EFA;</text>
+  <text x="226" y="274" class="t body">&#x6E10;&#x8FDB;&#x68C0;&#x7D22;&#xFF1A;cogmem_search&#xFF08;excerpt + id&#xFF09;&#x2192; cogmem_get / cogmem_timeline &#xB7; status / build</text>
+  <line x1="688" y1="302" x2="688" y2="324" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="658" y="304" width="60" height="20" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="688" y="318" text-anchor="middle" class="t badge">HTTP</text>
+  <rect x="160" y="328" width="1024" height="108" rx="14" fill="#FFFFFF" stroke="#D7E5DF"/>
+  <circle cx="196" cy="364" r="16" fill="#1F6B57"/>
+  <text x="196" y="369" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700" class="t">2</text>
+  <text x="226" y="360" class="t label">&#x63A5;&#x53E3;&#x4FA7; Python sidecar</text>
+  <text x="1168" y="360" text-anchor="end" class="t meta">pip install cogmem-core</text>
+  <text x="226" y="386" class="t body">&#x628A; OpenClaw &#x4F1A;&#x8BDD; / JSONL &#x7FFB;&#x8BD1;&#x6210; CogMemEvent</text>
+  <text x="226" y="412" class="t body">HTTP&#xFF1A;/recall /ingest /get /timeline /build /status</text>
+  <line x1="688" y1="436" x2="688" y2="478" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="646" y="444" width="84" height="20" rx="10" fill="#FFF7ED" stroke="#E7C9A0"/>
+  <text x="688" y="458" text-anchor="middle" class="t badge">&#x4EA4;&#x7ED9;&#x6838;&#x5FC3;</text>
+  <rect x="72" y="490" width="1136" height="176" rx="18" fill="#F6EFE2" stroke="#D7C4A3"/>
+  <rect x="72" y="490" width="64" height="176" rx="18" fill="#B45309"/>
+  <rect x="104" y="490" width="32" height="176" fill="#B45309"/>
+  <text transform="translate(104 578) rotate(-90)" text-anchor="middle" class="t gold-side">&#x7B97;&#x6CD5;&#x6838;&#x5FC3;</text>
+  <text transform="translate(122 578) rotate(-90)" text-anchor="middle" class="t gold-sub">cogmem-core &#xB7; &#x4E0D;&#x7BA1; OpenClaw &#xB7; &#x53EA;&#x7BA1;&#x8BB0;&#x5FC6;</text>
+  <rect x="160" y="512" width="328" height="132" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="324" y="548" text-anchor="middle" class="t card-title">&#x6784;&#x5EFA; <tspan class="card-en">Construction</tspan></text>
+  <text x="324" y="578" text-anchor="middle" class="t body">Event &#x2192; Memory</text>
+  <text x="324" y="602" text-anchor="middle" class="t body">&#x2192; Episode &#x2192; Trajectory</text>
+  <rect x="508" y="512" width="328" height="132" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="672" y="548" text-anchor="middle" class="t card-title">&#x53EC;&#x56DE; <tspan class="card-en">Recall</tspan></text>
+  <text x="672" y="578" text-anchor="middle" class="t body">Hybrid &#x53CC;&#x5411;&#x53EC;&#x56DE;</text>
+  <text x="672" y="602" text-anchor="middle" class="t body">excerpts / ContextPack</text>
+  <rect x="856" y="512" width="328" height="132" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="1020" y="548" text-anchor="middle" class="t card-title">&#x5B58;&#x50A8; <tspan class="card-en">Storage</tspan></text>
+  <text x="1020" y="578" text-anchor="middle" class="t body">episode / trajectory</text>
+  <text x="1020" y="602" text-anchor="middle" class="t body">preference</text>
+  <text x="640" y="698" text-anchor="middle" class="t foot">&#x6362;&#x5E73;&#x53F0;&#x65F6;&#x9EC4;&#x6846;&#x4E0D;&#x52A8;&#xFF0C;&#x53EA;&#x6362;&#x84DD;&#x6846;&#x3002;pip install &#x88C5;&#x7684;&#x662F;&#x9EC4;&#x6846;&#xFF1B;&#x53EF;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x5728;&#x84DD;&#x6846; 1&#xFF0C;&#x4E0D;&#x5728;&#x7B97;&#x6CD5;&#x6838;&#x5FC3;&#x3002;</text>
+</svg>

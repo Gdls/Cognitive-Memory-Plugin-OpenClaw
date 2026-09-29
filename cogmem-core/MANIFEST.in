@@ -1,0 +1,2 @@
+recursive-include src/cogmem_core/data *
+include README.md

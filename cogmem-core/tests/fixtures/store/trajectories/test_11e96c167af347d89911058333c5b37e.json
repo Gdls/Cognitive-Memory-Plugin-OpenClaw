@@ -1,0 +1,18 @@
+{
+  "trajectories": [
+    {
+      "conversation_id": "test_11e96c167af347d89911058333c5b37e",
+      "episode_ids": [
+        "ep_edf3ecc860f1"
+      ],
+      "metadata": {
+        "builder": "conversation_episode_sequence",
+        "episode_count": 1
+      },
+      "relations": [],
+      "summary": "Project Alpha needs a LoCoMo adapter. The adapter should produce episodes. The retrieval path should use trajectories.",
+      "title": "test_11e96c167af347d89911058333c5b37e runtime trajectory",
+      "trajectory_id": "trj_42a6c8f83344"
+    }
+  ]
+}

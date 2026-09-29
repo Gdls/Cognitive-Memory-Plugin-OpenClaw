@@ -1,0 +1,49 @@
+{
+  "memories": [
+    {
+      "conversation_id": "test_40b5572a15c747b09bc4bfa11bce32d7",
+      "memory_id": "mem_27ae335dabe8",
+      "memory_type": "event",
+      "metadata": {
+        "event_type": "user_message",
+        "speaker": null,
+        "status": null,
+        "store_policy": "memory_summary",
+        "tool_name": null
+      },
+      "source_event_id": "evt_c401089df7874290875ac3719986e283",
+      "text": "Project Alpha needs a LoCoMo adapter.",
+      "timestamp": "2026-08-04T08:25:46.650553+00:00"
+    },
+    {
+      "conversation_id": "test_40b5572a15c747b09bc4bfa11bce32d7",
+      "memory_id": "mem_e1a504b36248",
+      "memory_type": "event",
+      "metadata": {
+        "event_type": "assistant_message",
+        "speaker": null,
+        "status": null,
+        "store_policy": "memory_summary",
+        "tool_name": null
+      },
+      "source_event_id": "evt_f11e0fe3d5ed4516a9eca592d4a90f38",
+      "text": "The adapter should produce episodes.",
+      "timestamp": "2026-08-04T08:25:46.650553+00:00"
+    },
+    {
+      "conversation_id": "test_40b5572a15c747b09bc4bfa11bce32d7",
+      "memory_id": "mem_9ab169052603",
+      "memory_type": "event",
+      "metadata": {
+        "event_type": "user_message",
+        "speaker": null,
+        "status": null,
+        "store_policy": "memory_summary",
+        "tool_name": null
+      },
+      "source_event_id": "evt_c58f70c2ebad4a798bcc6f2791884470",
+      "text": "The retrieval path should use trajectories.",
+      "timestamp": "2026-08-04T08:25:46.650553+00:00"
+    }
+  ]
+}

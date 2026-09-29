@@ -1,0 +1,18 @@
+{
+  "trajectories": [
+    {
+      "conversation_id": "test_9e1171b1cc654ef2b955407f783209b5",
+      "episode_ids": [
+        "ep_717b1fbcb871"
+      ],
+      "metadata": {
+        "builder": "conversation_episode_sequence",
+        "episode_count": 1
+      },
+      "relations": [],
+      "summary": "The deployment target is Docker.",
+      "title": "test_9e1171b1cc654ef2b955407f783209b5 runtime trajectory",
+      "trajectory_id": "trj_f13ea86a41cc"
+    }
+  ]
+}

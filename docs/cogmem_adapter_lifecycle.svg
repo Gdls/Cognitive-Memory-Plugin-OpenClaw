@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1180" viewBox="0 0 1600 1180" role="img" aria-labelledby="title desc">
+  <title id="title">adapter lifecycle, interface mapping, and core algorithm layer</title>
+  <desc id="desc">Top pipeline is the timeline; A expands green auto steps 2/4/5; B expands optional model tools in step 3; both land in core Construction/Recall/Storage.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1F6B57"/>
+    </marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#B45309"/>
+    </marker>
+    <marker id="arrow-slate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#475569"/>
+    </marker>
+    <style type="text/css"><![CDATA[
+      .t { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; }
+      .title { font-size: 26px; font-weight: 700; fill: #0F172A; }
+      .sub { font-size: 13px; fill: #64748B; }
+      .h { font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .h-w { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
+      .s { font-size: 12px; fill: #64748B; }
+      .s-w { font-size: 11px; fill: #D9F0E8; }
+      .b { font-size: 13px; fill: #334155; }
+      .mono { font-size: 12px; font-family: ui-monospace, Consolas, monospace; fill: #1E293B; }
+      .mono-s { font-size: 11px; font-family: ui-monospace, Consolas, monospace; fill: #475569; }
+      .pill { font-size: 11px; font-weight: 700; fill: #1F6B57; }
+      .gold { font-size: 12px; font-weight: 700; fill: #9A3412; }
+      .gold-h { font-size: 15px; font-weight: 700; fill: #8A5A12; }
+      .gold-en { font-size: 12px; font-weight: 600; fill: #B45309; }
+      .foot { font-size: 13px; fill: #64748B; }
+      .num { font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+      .tag { font-size: 11px; font-weight: 700; fill: #1F6B57; }
+      .tag-dark { font-size: 11px; font-weight: 700; fill: #0F172A; }
+    ]]></style>
+  </defs>
+  <rect width="1600" height="1180" fill="#F7F8FA"/>
+  <text x="800" y="36" text-anchor="middle" class="t title">&#x5E73;&#x53F0;&#x9002;&#x914D;&#x5C42;&#xFF1A;&#x81EA;&#x52A8;&#x5316;&#x751F;&#x547D;&#x5468;&#x671F; + &#x63A5;&#x53E3;&#x6620;&#x5C04; + &#x6838;&#x5FC3;&#x7B97;&#x6CD5;</text>
+  <text x="800" y="58" text-anchor="middle" class="t sub">&#x9876;&#x90E8; = &#x4E00;&#x8F6E;&#x5BF9;&#x8BDD;&#x7684;&#x65F6;&#x95F4;&#x987A;&#x5E8F;&#xFF1B;A = &#x5C55;&#x5F00;&#x7EFF;&#x8272;&#x81EA;&#x52A8;&#x6B65;&#xFF08;&#x2461;&#x2463;&#x2464;&#xFF09;&#xFF1B;B = &#x5C55;&#x5F00;&#x6B65;&#x2462;&#x91CC;&#x6A21;&#x578B;&#x53EF;&#x9009;&#x5DE5;&#x5177;&#xFF1B;C = &#x9EC4;&#x8272; Core API &#x843D;&#x70B9;</text>
+
+  <!-- ===== lifecycle strip ===== -->
+  <rect x="40" y="74" width="1520" height="168" rx="16" fill="#EAF6F1" stroke="#7F9E94" stroke-dasharray="6 5"/>
+  <text x="60" y="98" class="t h">&#x4E00;&#x8F6E;&#x5BF9;&#x8BDD;&#x7684;&#x81EA;&#x52A8;&#x5316;&#x751F;&#x547D;&#x5468;&#x671F;</text>
+  <text x="430" y="98" class="t s">&#x7EFF;&#x8272; = &#x7CFB;&#x7EDF;&#x81EA;&#x5DF1;&#x8DD1;&#xFF08;&#x8BE6;&#x8868;&#x5728; A&#xFF09;&#xFF1B;&#x767D;&#x8272;&#x6B65;&#x2462; = &#x6A21;&#x578B;&#x53EF;&#x9009;&#x8C03;&#x5DE5;&#x5177;&#xFF08;&#x8BE6;&#x8868;&#x5728; B&#xFF09;</text>
+
+  <rect x="60" y="114" width="230" height="86" rx="12" fill="#FFFFFF" stroke="#D7E5DF"/>
+  <circle cx="84" cy="138" r="12" fill="#64748B"/>
+  <text x="84" y="142" text-anchor="middle" class="t num">1</text>
+  <text x="104" y="142" class="t h">&#x7528;&#x6237;&#x53D1;&#x6D88;&#x606F;</text>
+  <text x="104" y="166" class="t s">OpenClaw Gateway</text>
+  <text x="104" y="186" class="t mono-s">&#x89E6;&#x53D1;&#x4E0B;&#x9762;&#x4E00;&#x8F6E;</text>
+
+  <line x1="290" y1="157" x2="318" y2="157" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="114" width="240" height="86" rx="12" fill="#1F6B57"/>
+  <circle cx="344" cy="138" r="12" fill="#FFFFFF"/>
+  <text x="344" y="142" text-anchor="middle" class="t" fill="#1F6B57" font-size="13" font-weight="700">2</text>
+  <text x="364" y="142" class="t h-w">&#x81EA;&#x52A8;&#x53EC;&#x56DE;</text>
+  <text x="364" y="166" class="t s-w">before_prompt_build</text>
+  <text x="364" y="186" class="t s-w">POST /v1/openclaw/recall</text>
+
+  <line x1="560" y1="157" x2="588" y2="157" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="590" y="114" width="240" height="86" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+  <circle cx="614" cy="138" r="12" fill="#0F172A"/>
+  <text x="614" y="142" text-anchor="middle" class="t num">3</text>
+  <text x="634" y="142" class="t h">&#x6A21;&#x578B;&#x56DE;&#x7B54;</text>
+  <text x="634" y="166" class="t s">&#x53EF;&#x9009;&#xFF1A;&#x6309;&#x534F;&#x8BAE;&#x8C03;&#x5DE5;&#x5177;</text>
+  <text x="634" y="186" class="t mono-s">search &#x2192; get / timeline</text>
+
+  <line x1="830" y1="157" x2="858" y2="157" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="860" y="114" width="240" height="86" rx="12" fill="#1F6B57"/>
+  <circle cx="884" cy="138" r="12" fill="#FFFFFF"/>
+  <text x="884" y="142" text-anchor="middle" class="t" fill="#1F6B57" font-size="13" font-weight="700">4</text>
+  <text x="904" y="142" class="t h-w">&#x81EA;&#x52A8;&#x5199;&#x5165;</text>
+  <text x="904" y="166" class="t s-w">agent_end</text>
+  <text x="904" y="186" class="t s-w">POST /v1/openclaw/ingest</text>
+
+  <line x1="1100" y1="157" x2="1128" y2="157" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="1130" y="114" width="400" height="86" rx="12" fill="#1F6B57"/>
+  <circle cx="1154" cy="138" r="12" fill="#FFFFFF"/>
+  <text x="1154" y="142" text-anchor="middle" class="t" fill="#1F6B57" font-size="13" font-weight="700">5</text>
+  <text x="1174" y="142" class="t h-w">&#x81EA;&#x52A8;&#x6784;&#x5EFA;</text>
+  <text x="1174" y="166" class="t s-w">&#x6BCF;10&#x8F6E; / compaction / session_end</text>
+  <text x="1174" y="186" class="t s-w">POST /v1/build</text>
+
+  <!-- under-step badges: which detail panel -->
+  <rect x="380" y="208" width="120" height="24" rx="8" fill="#FFFFFF" stroke="#1F6B57"/>
+  <text x="440" y="224" text-anchor="middle" class="t tag">&#x8BE6;&#x8868; &#x2192; A</text>
+  <rect x="650" y="208" width="120" height="24" rx="8" fill="#FFFFFF" stroke="#0F172A"/>
+  <text x="710" y="224" text-anchor="middle" class="t tag-dark">&#x8BE6;&#x8868; &#x2192; B</text>
+  <rect x="920" y="208" width="120" height="24" rx="8" fill="#FFFFFF" stroke="#1F6B57"/>
+  <text x="980" y="224" text-anchor="middle" class="t tag">&#x8BE6;&#x8868; &#x2192; A</text>
+  <rect x="1270" y="208" width="120" height="24" rx="8" fill="#FFFFFF" stroke="#1F6B57"/>
+  <text x="1330" y="224" text-anchor="middle" class="t tag">&#x8BE6;&#x8868; &#x2192; A</text>
+
+  <!-- connector lines from badges to A/B -->
+  <path d="M440 232 L440 248 L410 248" fill="none" stroke="#1F6B57" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M980 232 L980 248 L410 248" fill="none" stroke="#1F6B57" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M1330 232 L1330 248 L410 248" fill="none" stroke="#1F6B57" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="410" y1="248" x2="410" y2="278" stroke="#1F6B57" stroke-width="1.8" marker-end="url(#arrow-teal)"/>
+
+  <path d="M710 232 L710 248 L1180 248" fill="none" stroke="#0F172A" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="1180" y1="248" x2="1180" y2="278" stroke="#0F172A" stroke-width="1.8" marker-end="url(#arrow-slate)"/>
+
+  <!-- bridge legend -->
+  <rect x="40" y="252" width="1520" height="36" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="60" y="275" class="t b">&#x5173;&#x7CFB;&#xFF1A;</text>
+  <text x="120" y="275" class="t" fill="#1F6B57" font-size="13" font-weight="700">&#x6B65;&#x2461;&#x2463;&#x2464;&#xFF08;&#x7CFB;&#x7EDF;&#x81EA;&#x52A8;&#xFF09; &#x2192; A &#x63A5;&#x53E3;&#x8868;</text>
+  <text x="520" y="275" class="t" fill="#0F172A" font-size="13" font-weight="700">&#x6B65;&#x2462;&#xFF08;&#x6A21;&#x578B;&#x53EF;&#x9009;&#x8C03;&#x5DE5;&#x5177;&#xFF09; &#x2192; B &#x63A5;&#x53E3;&#x8868;</text>
+  <text x="980" y="275" class="t s">A / B &#x4E0D;&#x662F;&#x65B0;&#x6B65;&#x9AA4;&#xFF0C;&#x662F;&#x628A;&#x9876;&#x90E8;&#x5BF9;&#x5E94;&#x6B65;&#x5C55;&#x5F00;&#x6210;&#x300C;Hook/&#x5DE5;&#x5177; &#x2192; HTTP &#x2192; Core API&#x300D;</text>
+
+  <!-- ===== left: system mapping ===== -->
+  <rect x="40" y="304" width="740" height="430" rx="16" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <rect x="40" y="304" width="740" height="44" rx="16" fill="#1F6B57"/>
+  <rect x="40" y="332" width="740" height="16" fill="#1F6B57"/>
+  <text x="60" y="332" class="t h-w">A. &#x7CFB;&#x7EDF;&#x81EA;&#x52A8;&#x6620;&#x5C04;</text>
+  <text x="760" y="332" text-anchor="end" class="t s-w">&#x5C55;&#x5F00;&#x6B65;&#x2461; + &#x2463; + &#x2464;</text>
+
+  <text x="70" y="372" class="t s">&#x5BF9;&#x5E94;&#x6B65;</text>
+  <text x="200" y="372" class="t s">Hook</text>
+  <text x="430" y="372" class="t s">HTTP</text>
+  <text x="640" y="372" class="t s">Core API</text>
+  <line x1="60" y1="382" x2="760" y2="382" stroke="#E2E8F0"/>
+
+  <rect x="60" y="394" width="700" height="72" rx="10" fill="#EAF6F1"/>
+  <rect x="70" y="410" width="36" height="36" rx="8" fill="#1F6B57"/>
+  <text x="88" y="433" text-anchor="middle" class="t num">2</text>
+  <text x="200" y="416" class="t b">before_prompt_build</text>
+  <text x="200" y="436" class="t s">&#x53D1;&#x6D88;&#x606F;&#x524D;&#x81EA;&#x52A8;&#x53EC;&#x56DE; excerpts</text>
+  <text x="430" y="426" class="t mono">POST /v1/openclaw/recall</text>
+  <text x="640" y="426" class="t gold">retrieve_context()</text>
+
+  <rect x="60" y="478" width="700" height="72" rx="10" fill="#EAF6F1"/>
+  <rect x="70" y="494" width="36" height="36" rx="8" fill="#1F6B57"/>
+  <text x="88" y="517" text-anchor="middle" class="t num">4</text>
+  <text x="200" y="500" class="t b">agent_end</text>
+  <text x="200" y="520" class="t s">&#x56DE;&#x5408;&#x7ED3;&#x675F;&#x5199;&#x5165; Temporal</text>
+  <text x="430" y="510" class="t mono">POST /v1/openclaw/ingest</text>
+  <text x="640" y="510" class="t gold">append_events()</text>
+
+  <rect x="60" y="562" width="700" height="72" rx="10" fill="#EAF6F1"/>
+  <rect x="70" y="578" width="36" height="36" rx="8" fill="#1F6B57"/>
+  <text x="88" y="601" text-anchor="middle" class="t num">5</text>
+  <text x="200" y="584" class="t b">compaction / session_end</text>
+  <text x="200" y="604" class="t s">&#x4E34;&#x65F6;&#x8BB0;&#x5FC6; &#x2192; Episode / Trajectory</text>
+  <text x="430" y="594" class="t mono">POST /v1/build</text>
+  <text x="640" y="594" class="t gold">build_memory()</text>
+
+  <rect x="60" y="648" width="700" height="70" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="80" y="676" class="t b">&#x81EA;&#x52A8;&#x53EC;&#x56DE;&#xFF1A;&#x7528;&#x6237;&#x539F;&#x8BDD;&#x53BB; /recall &#xB7; &#x53EA;&#x6CE8;&#x5165; excerpts</text>
+  <text x="80" y="700" class="t s">&#x4E0D;&#x591F;&#x65F6;&#x63D0;&#x793A;&#x6A21;&#x578B;&#x8C03; cogmem_search&#xFF08;&#x8DF3;&#x5230; B / &#x6B65;&#x2462;&#xFF09;</text>
+
+  <!-- ===== right: model mapping ===== -->
+  <rect x="800" y="304" width="760" height="430" rx="16" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <rect x="800" y="304" width="760" height="44" rx="16" fill="#0F172A"/>
+  <rect x="800" y="332" width="760" height="16" fill="#0F172A"/>
+  <text x="820" y="332" class="t h-w">B. &#x6A21;&#x578B;&#x4E3B;&#x52A8;&#x6620;&#x5C04;</text>
+  <text x="1540" y="332" text-anchor="end" class="t s-w">&#x5C55;&#x5F00;&#x6B65;&#x2462;&#x91CC;&#x7684;&#x5DE5;&#x5177;</text>
+
+  <rect x="820" y="360" width="48" height="28" rx="8" fill="#0F172A"/>
+  <text x="844" y="379" text-anchor="middle" class="t num">3</text>
+  <text x="880" y="379" class="t b">&#x53EA;&#x5728;&#x300C;&#x6A21;&#x578B;&#x56DE;&#x7B54;&#x300D;&#x9636;&#x6BB5;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#xFF1B;&#x4E0D;&#x662F;&#x6BCF;&#x8F6E;&#x5FC5;&#x8C03;</text>
+
+  <text x="830" y="416" class="t s">&#x6A21;&#x578B;&#x770B;&#x5230;&#x7684;&#x51FD;&#x6570;</text>
+  <text x="1080" y="416" class="t s">HTTP</text>
+  <text x="1360" y="416" class="t s">Core API</text>
+  <line x1="820" y1="426" x2="1540" y2="426" stroke="#E2E8F0"/>
+
+  <text x="830" y="452" class="t mono">cogmem_search</text>
+  <text x="1080" y="452" class="t mono-s">POST /v1/openclaw/recall</text>
+  <text x="1360" y="452" class="t gold">retrieve_context()</text>
+  <text x="830" y="470" class="t s">&#x8FD4;&#x56DE; excerpt + id + sufficient + next_tools</text>
+
+  <text x="830" y="502" class="t mono">cogmem_get</text>
+  <text x="1080" y="502" class="t mono-s">POST /v1/openclaw/get</text>
+  <text x="1360" y="502" class="t gold">get_item()</text>
+  <text x="830" y="520" class="t s">&#x6309; item_id &#x53D6;&#x539F;&#x6587;</text>
+
+  <text x="830" y="552" class="t mono">cogmem_timeline</text>
+  <text x="1080" y="552" class="t mono-s">POST /v1/openclaw/timeline</text>
+  <text x="1360" y="552" class="t gold">get_timeline()</text>
+  <text x="830" y="570" class="t s">&#x6309; episode_id &#x53D6;&#x7ECF;&#x5386;&#x987A;&#x5E8F;</text>
+
+  <text x="830" y="602" class="t mono">cogmem_status / cogmem_build</text>
+  <text x="1080" y="602" class="t mono-s">GET /status &#xB7; POST /build</text>
+  <text x="1360" y="602" class="t gold">get_status() / build_memory()</text>
+
+  <line x1="820" y1="620" x2="1540" y2="620" stroke="#E2E8F0"/>
+
+  <text x="830" y="646" class="t h">&#x8C03;&#x7528;&#x987A;&#x5E8F;&#xFF08;&#x7531; id &#x4E32;&#x8D77;&#x6765;&#xFF09;</text>
+  <rect x="830" y="658" width="170" height="54" rx="10" fill="#EAF6F1" stroke="#7F9E94"/>
+  <text x="915" y="680" text-anchor="middle" class="t b">cogmem_search</text>
+  <text x="915" y="698" text-anchor="middle" class="t s">excerpt + id</text>
+  <line x1="1000" y1="674" x2="1038" y2="674" stroke="#1F6B57" stroke-width="1.5" marker-end="url(#arrow-teal)"/>
+  <line x1="1000" y1="696" x2="1038" y2="696" stroke="#1F6B57" stroke-width="1.5" marker-end="url(#arrow-teal)"/>
+  <rect x="1040" y="658" width="160" height="26" rx="8" fill="#FFFFFF" stroke="#1F6B57"/>
+  <text x="1120" y="676" text-anchor="middle" class="t b">cogmem_get</text>
+  <rect x="1040" y="686" width="160" height="26" rx="8" fill="#FFFFFF" stroke="#1F6B57"/>
+  <text x="1120" y="704" text-anchor="middle" class="t b">cogmem_timeline</text>
+  <text x="1220" y="676" class="t s">&#x539F;&#x6587;</text>
+  <text x="1220" y="704" class="t s">&#x987A;&#x5E8F;</text>
+
+  <!-- arrows A/B into C -->
+  <line x1="410" y1="734" x2="410" y2="768" stroke="#B45309" stroke-width="1.8" marker-end="url(#arrow-gold)"/>
+  <line x1="1180" y1="734" x2="1180" y2="768" stroke="#B45309" stroke-width="1.8" marker-end="url(#arrow-gold)"/>
+  <text x="800" y="760" text-anchor="middle" class="t gold">A / B &#x7684;&#x9EC4;&#x8272; Core API &#x90FD;&#x4EA4;&#x7ED9;&#x540C;&#x4E00;&#x4E2A;&#x6838;&#x5FC3;&#xFF08;&#x4E0D;&#x7BA1; OpenClaw&#xFF09;</text>
+
+  <!-- ===== C: core algorithm layer ===== -->
+  <rect x="40" y="774" width="1520" height="350" rx="16" fill="#F6EFE2" stroke="#D7C4A3"/>
+  <rect x="40" y="774" width="64" height="350" rx="16" fill="#B45309"/>
+  <rect x="72" y="774" width="32" height="350" fill="#B45309"/>
+  <text transform="translate(72 949) rotate(-90)" text-anchor="middle" class="t h-w">&#x7B97;&#x6CD5;&#x6838;&#x5FC3;</text>
+  <text transform="translate(90 949) rotate(-90)" text-anchor="middle" class="t" fill="#F6E7C8" font-size="11">cogmem-core</text>
+
+  <text x="120" y="806" class="t gold-h">C. &#x6838;&#x5FC3;&#x7B97;&#x6CD5;&#x5C42;</text>
+  <text x="320" y="806" class="t s">&#x6362;&#x5E73;&#x53F0;&#x65F6;&#x8FD9;&#x4E00;&#x5C42;&#x4E0D;&#x52A8;&#xFF1B;&#x9876;&#x90E8;&#x6D41;&#x6C34;&#x7EBF;&#x548C; A / B &#x53EA;&#x662F;&#x8C03;&#x7528;&#x5165;&#x53E3;</text>
+
+  <rect x="120" y="826" width="460" height="270" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="350" y="858" text-anchor="middle" class="t gold-h">&#x6784;&#x5EFA; <tspan class="gold-en">Construction</tspan></text>
+  <text x="350" y="884" text-anchor="middle" class="t b">Event &#x2192; Memory &#x2192; Episode &#x2192; Trajectory</text>
+  <line x1="150" y1="898" x2="550" y2="898" stroke="#E8D7B8"/>
+  <text x="150" y="926" class="t gold">append_events()</text>
+  <text x="340" y="926" class="t s">&#x6765;&#x81EA;&#x6B65;&#x2463; / A &#x7B2C;2 &#x884C;</text>
+  <text x="150" y="954" class="t gold">build_memory()</text>
+  <text x="340" y="954" class="t s">&#x6765;&#x81EA;&#x6B65;&#x2464; / A &#x7B2C;3 &#x884C;&#xFF08;&#x6216; B &#x7684; build&#xFF09;</text>
+  <text x="150" y="990" class="t s">&#x5199;&#x5165; Temporal&#xFF0C;&#x518D;&#x6574;&#x7406;&#x6210; Episode / Trajectory</text>
+  <text x="150" y="1020" class="t mono-s">HTTP: /ingest &#xB7; /build</text>
+  <text x="150" y="1054" class="t s">&#x4E0D;&#x7BA1; OpenClaw hook &#x540D;&#xFF0C;&#x53EA;&#x7BA1;&#x4E8B;&#x4EF6;&#x4E0E;&#x8BB0;&#x5FC6;&#x6784;&#x5EFA;</text>
+
+  <rect x="600" y="826" width="460" height="270" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="830" y="858" text-anchor="middle" class="t gold-h">&#x53EC;&#x56DE; <tspan class="gold-en">Recall</tspan></text>
+  <text x="830" y="884" text-anchor="middle" class="t b">Hybrid &#x53CC;&#x5411;&#x53EC;&#x56DE; &#xB7; excerpts / ContextPack</text>
+  <line x1="630" y1="898" x2="1030" y2="898" stroke="#E8D7B8"/>
+  <text x="630" y="926" class="t gold">retrieve_context()</text>
+  <text x="820" y="926" class="t s">&#x6B65;&#x2461; &#x4E0E; B &#x7684; search &#x5171;&#x7528;</text>
+  <text x="630" y="954" class="t gold">get_item() / get_timeline()</text>
+  <text x="860" y="954" class="t s">&#x4EC5;&#x6B65;&#x2462; / B</text>
+  <text x="630" y="990" class="t s">&#x5148;&#x6458;&#x8981;&#xFF0C;&#x4E0D;&#x591F;&#x518D;&#x6309; id &#x5F80;&#x4E0B;&#x6316;</text>
+  <text x="630" y="1020" class="t mono-s">HTTP: /recall &#xB7; /get &#xB7; /timeline</text>
+  <text x="630" y="1054" class="t s">&#x81EA;&#x52A8;&#x53EC;&#x56DE;&#x4E0E;&#x5DE5;&#x5177;&#x641C;&#x7D22;&#x8D70;&#x540C;&#x4E00;&#x4E2A;&#x6838;&#x5FC3;&#x51FD;&#x6570;</text>
+
+  <rect x="1080" y="826" width="450" height="270" rx="14" fill="#FFFFFF" stroke="#E8D7B8"/>
+  <text x="1305" y="858" text-anchor="middle" class="t gold-h">&#x5B58;&#x50A8; <tspan class="gold-en">Storage</tspan></text>
+  <text x="1305" y="884" text-anchor="middle" class="t b">episode / trajectory / preference</text>
+  <line x1="1110" y1="898" x2="1500" y2="898" stroke="#E8D7B8"/>
+  <text x="1110" y="926" class="t gold">get_status()</text>
+  <text x="1280" y="926" class="t s">&#x4E3B;&#x8981;&#x6765;&#x81EA; B</text>
+  <text x="1110" y="954" class="t b">&#x6784;&#x5EFA;&#x5199;&#x5165;&#xFF0C;&#x53EC;&#x56DE;&#x8BFB;&#x51FA;</text>
+  <text x="1110" y="990" class="t s">&#x5B58;&#x50A8;&#x540E;&#x7AEF;&#x4E0D;&#x66B4;&#x9732;&#x7ED9;&#x5E73;&#x53F0;</text>
+  <text x="1110" y="1020" class="t mono-s">HTTP: /status</text>
+  <text x="1110" y="1054" class="t s">&#x6240;&#x6709;&#x5199;&#x8BFB; Core API &#x6700;&#x7EC8;&#x843D;&#x5728;&#x8FD9;&#x91CC;</text>
+
+  <text x="800" y="1152" text-anchor="middle" class="t foot">&#x8BFB;&#x56FE;&#x987A;&#x5E8F;&#xFF1A;&#x9876;&#x90E8;&#x770B;&#x300C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x300D; &#x2192; A/B &#x770B;&#x300C;&#x600E;&#x4E48;&#x63A5;&#x7EBF;&#x300D; &#x2192; C &#x770B;&#x300C;&#x7B97;&#x6CD5;&#x505A;&#x4EC0;&#x4E48;&#x300D;&#x3002;&#x6362;&#x5E73;&#x53F0;&#x53EA;&#x6362;&#x9876;&#x90E8;&#x4E0E; A/B&#xFF0C;C &#x4E0D;&#x52A8;&#x3002;</text>
+</svg>

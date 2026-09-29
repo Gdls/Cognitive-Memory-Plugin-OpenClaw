@@ -1,0 +1,19 @@
+{
+  "memories": [
+    {
+      "conversation_id": "test_6fc655f98e1744739e5c2cc1dccd4120",
+      "memory_id": "mem_83846857f6a9",
+      "memory_type": "event",
+      "metadata": {
+        "event_type": "user_message",
+        "speaker": null,
+        "status": null,
+        "store_policy": "memory_summary",
+        "tool_name": null
+      },
+      "source_event_id": "evt_273026cb50524e8cbad24cc7d0cd11d5",
+      "text": "我偏好先给结论再给细节。",
+      "timestamp": "2026-08-04T07:54:10.883666+00:00"
+    }
+  ]
+}
