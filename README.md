@@ -1,82 +1,84 @@
 # Cognitive-Memory-Plugin [OpenClaw]
 
-**面向智能体的认知记忆框架：从交互事件构建长期记忆，为后续任务提供相关上下文。**
+**English** | [简体中文](README.zh-CN.md)
 
-CogMem 将智能体的交互记录组织为 Memory、Episode 和 Trajectory，结合近期事件与用户偏好生成可供模型使用的记忆上下文。项目采用 Python 核心与平台适配层分离的架构，支持直接通过 Python API 使用，也提供基于 HTTP sidecar 的 OpenClaw 插件。
+**A cognitive memory framework for agents: build long-term memory from interaction events and retrieve relevant context for future tasks.**
 
-## 功能概览
+CogMem organizes agent interactions into Memory, Episode, and Trajectory structures. It combines recent events and user preferences to assemble memory context for language models. The Python core is separate from platform adapters: use it directly through the Python API or connect OpenClaw through an HTTP sidecar.
 
-- **分层记忆构建**：将事件整理为记忆对象、连续经历（Episode）和主题轨迹（Trajectory）。
-- **近期与长期记忆召回**：结合近期事件和已构建的长期记忆，进行混合双向召回与上下文编译。
-- **用户偏好提取**：从用户话轮中提取称呼、风格、角色和约束，作为行为指导加入上下文。
-- **渐进式检索**：先返回摘要与标识，再按需读取全文或经历时间线。
-- **OpenClaw 自动接入**：通过生命周期 hook 完成回答前召回、回合结束写入和记忆构建。
-- **本地持久化**：使用 JSON / JSONL 文件保存数据；默认记忆处理流程无需 GPU、外部 LLM 或 embedding 服务。
+## Features
 
-## 架构
+- **Hierarchical memory construction**: organize events into memory objects, coherent episodes, and thematic trajectories.
+- **Recent and long-term recall**: combine recent events with constructed memories through hybrid bidirectional retrieval and context compilation.
+- **User preferences**: extract names, response styles, roles, and constraints from user turns and include them as behavioral guidance.
+- **Progressive retrieval**: retrieve excerpts and identifiers first, then expand individual items or episode timelines as needed.
+- **OpenClaw integration**: use lifecycle hooks for recall before responses, event capture after turns, and memory construction.
+- **Local persistence**: store data in JSON / JSONL files. Default memory processing requires no GPU, external LLM, or embedding service.
+
+## Architecture
 
 ```text
 OpenClaw Gateway
-        │ 生命周期 hook / 记忆工具
+        │ Lifecycle hooks / memory tools
         ▼
-openclaw-cogmem（平台适配层）
+openclaw-cogmem (platform adapter)
         │ HTTP
         ▼
-CogMem sidecar（FastAPI）
+CogMem sidecar (FastAPI)
         │
         ▼
 cogmem-core ◄──────── Python API
-  ├── Construction   事件 → Memory → Episode → Trajectory
-  ├── Recall         记忆召回、排序与上下文编译
-  ├── Adapters       平台事件与核心数据结构转换
-  └── Repositories   本地 JSON / JSONL 存储
+  ├── Construction   Events → Memory → Episode → Trajectory
+  ├── Recall         Retrieval, ranking, and context compilation
+  ├── Adapters       Platform events ↔ core data structures
+  └── Repositories   Local JSON / JSONL storage
 ```
 
-记忆构建与在线召回分别由 `ConstructionService` 和 `RecallService` 负责。平台插件处理事件接入与工具注册，记忆算法由核心实现。
+`ConstructionService` handles memory construction, while `RecallService` handles online retrieval. The platform plugin captures events and registers tools; memory algorithms live in the core.
 
-## 环境要求
+## Requirements
 
-| 组件 | 要求 |
+| Component | Requirement |
 | --- | --- |
-| Python 核心与 sidecar | Python 3.10 或更高版本 |
-| Python 运行依赖 | FastAPI、Uvicorn、Pydantic，安装核心时自动安装 |
-| OpenClaw 接入（可选） | 插件声明兼容 `openclaw >= 2026.3.0`；需自行安装并配置 Gateway 及其 Node.js 运行环境 |
-| LLM 记忆构建（可选） | 提供兼容 Chat Completions 接口的模型服务 |
+| Python core and sidecar | Python 3.10 or later |
+| Python runtime dependencies | FastAPI, Uvicorn, and Pydantic; installed with the core |
+| OpenClaw integration (optional) | The plugin declares `openclaw >= 2026.3.0`; install and configure the Gateway and its Node.js runtime separately |
+| LLM-assisted construction (optional) | A model service with a compatible Chat Completions interface |
 
-## 快速开始
+## Quick start
 
-以下命令均在下载或克隆后的**仓库根目录**执行。
+Run the following commands from the **repository root** after downloading or cloning the project.
 
-### 1. 安装 Python 核心
+### 1. Install the Python core
 
-创建虚拟环境：
+Create a virtual environment:
 
 ```bash
 python -m venv .venv
 ```
 
-Linux / macOS 激活环境：
+Activate it on Linux / macOS:
 
 ```bash
 source .venv/bin/activate
 ```
 
-Windows PowerShell 激活环境：
+Or on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-安装并检查命令行入口：
+Install the package and check the CLI:
 
 ```bash
 python -m pip install -e ./cogmem-core
 cogmem --help
 ```
 
-### 2. 使用 Python API
+### 2. Use the Python API
 
-以下示例演示事件写入、长期记忆构建和上下文召回，无需启动 OpenClaw 或 HTTP 服务。
+This example writes events, constructs long-term memory, and retrieves context. OpenClaw and the HTTP service are not required.
 
 ```python
 from cogmem_core import CogMem
@@ -87,54 +89,54 @@ conversation_id = "demo_session"
 memory.append_events(
     conversation_id=conversation_id,
     events=[
-        {"event_type": "user_message", "text": "帮我查订单状态"},
-        {"event_type": "assistant_message", "text": "订单已经发货"},
+        {"event_type": "user_message", "text": "Please check my order status."},
+        {"event_type": "assistant_message", "text": "Your order has shipped."},
     ],
 )
 memory.build_memory(conversation_id)
 
 context = memory.retrieve_context(
     conversation_id=conversation_id,
-    query="用户之前的订单状态是什么？",
+    query="What was the user's previous order status?",
 )
 print(context["prompt_text"])
 ```
 
-`append_events()` 写入事件，`build_memory()` 构建长期记忆，`retrieve_context()` 返回包含 `prompt_text` 的上下文结果。尚未构建的近期事件也可参与召回。
+`append_events()` stores events, `build_memory()` constructs long-term memory, and `retrieve_context()` returns context containing `prompt_text`. Recent events can also participate in recall before long-term construction runs.
 
-### 3. 启动 HTTP 服务（可选）
+### 3. Start the HTTP service (optional)
 
-接入 OpenClaw 或通过 HTTP 使用 CogMem 时，启动 sidecar：
+Start the sidecar to connect OpenClaw or access CogMem over HTTP:
 
 ```bash
 cogmem sidecar --store ./cogmem_store --host 127.0.0.1 --port 8787
 ```
 
-也可使用 Python 模块入口：
+Alternatively, use the Python module entry point:
 
 ```bash
 python -m cogmem_core.sidecar --store ./cogmem_store --host 127.0.0.1 --port 8787
 ```
 
-服务启动后，在浏览器中访问 `http://127.0.0.1:8787/health`，应返回 `ok: true` 和存储目录路径。接口文档位于 `http://127.0.0.1:8787/docs`。
+Open `http://127.0.0.1:8787/health` in a browser. The response should contain `ok: true` and the storage path. Interactive API documentation is available at `http://127.0.0.1:8787/docs`.
 
-`--store` 指定数据目录；相对路径以启动服务时的工作目录为基准。需要复用已有记忆时，应指向同一存储目录。
+`--store` specifies the data directory. Relative paths are resolved from the working directory used to launch the service. Point to the same directory to reuse existing memories.
 
-## 接入 OpenClaw
+## Connect OpenClaw
 
-### 1. 安装插件
+### 1. Install the plugin
 
-保持 sidecar 运行，在 OpenClaw 所在机器的另一个终端中执行（该环境需已安装 `cogmem-core`）：
+Keep the sidecar running. In another terminal on the OpenClaw machine, with `cogmem-core` installed, run:
 
 ```bash
 cogmem openclaw-install
 ```
 
-该命令将 Python 包内附带的插件复制到 `~/.openclaw/plugins/openclaw-cogmem`，并输出安装路径与配置片段。
+This copies the plugin bundled in the Python package to `~/.openclaw/plugins/openclaw-cogmem` and prints its installation path and a configuration snippet.
 
-### 2. 合并配置
+### 2. Merge the configuration
 
-将命令输出的配置合并到 `~/.openclaw/openclaw.json`，保留已有配置。结构如下：
+Merge the generated snippet into `~/.openclaw/openclaw.json`, preserving existing settings. The configuration has this structure:
 
 ```json
 {
@@ -155,142 +157,145 @@ cogmem openclaw-install
       }
     },
     "load": {
-      "paths": ["<插件安装目录的绝对路径>"]
+      "paths": ["<absolute-path-to-installed-plugin>"]
     }
   }
 }
 ```
 
-将 `load.paths` 中的占位符替换为安装命令输出的绝对路径。Windows 路径可使用 `/`，例如 `C:/Users/your-name/.openclaw/plugins/openclaw-cogmem`。上述 hook 配置用于允许记忆上下文注入与对话访问。
+Replace the placeholder in `load.paths` with the absolute path printed by the installer. Windows paths can use `/`, for example `C:/Users/your-name/.openclaw/plugins/openclaw-cogmem`. The hook settings enable memory context injection and conversation access.
 
-### 3. 重启并验证
+### 3. Restart and verify
 
 ```bash
 openclaw gateway restart
 ```
 
-插件成功注册时，Gateway 日志中会出现：
+When registration succeeds, the Gateway log includes:
 
 ```text
 cogmem plugin registered sidecar=http://127.0.0.1:8787
 ```
 
-随后进行一次对话，检查 sidecar 是否收到 `/v1/openclaw/recall` 与 `/v1/openclaw/ingest` 请求。新存储目录初始为空，历史记忆需要通过后续对话积累或日志导入获得。
+Start a conversation and check that the sidecar receives `/v1/openclaw/recall` and `/v1/openclaw/ingest` requests. A new store is empty; memories accumulate through subsequent conversations or log imports.
 
-### 自动记忆流程
+### Automatic memory lifecycle
 
-| 触发时机 | 行为 |
+| Trigger | Behavior |
 | --- | --- |
-| `before_prompt_build` | 召回相关记忆，将摘要加入模型上下文 |
-| `agent_end` | 写入本轮事件，并按内置计数周期触发构建 |
-| `before_compaction` / `session_end` | 启用 `autoBuild` 时构建当前会话的长期记忆 |
+| `before_prompt_build` | Retrieve relevant memories and add excerpts to model context |
+| `agent_end` | Capture events and trigger construction according to the built-in counter |
+| `before_compaction` / `session_end` | Construct long-term memory for the current conversation when `autoBuild` is enabled |
 
-默认在当前会话召回命中少于 3 条时尝试跨会话召回。周期构建默认每累计 10 次符合条件的回合结束事件触发一次；计数器属于插件实例，触发时构建该事件对应的会话。
+By default, the plugin attempts cross-conversation recall when the current conversation returns fewer than 3 hits. Periodic construction runs after every 10 eligible turn-end events. The counter belongs to the plugin instance; construction targets the conversation associated with the triggering event.
 
-### 插件配置
+### Plugin configuration
 
-以下字段可写入 `plugins.entries.cogmem.config`，以仓库中的 `openclaw.plugin.json` 为准：
+The following fields are accepted in `plugins.entries.cogmem.config`, as defined in `openclaw.plugin.json`:
 
-| 配置项 | 默认值 | 说明 |
+| Setting | Default | Description |
 | --- | --- | --- |
-| `sidecarUrl` | `http://127.0.0.1:8787` | 记忆服务地址 |
-| `recallConversationId` | `""` | 留空使用当前会话；非空时指定召回会话 |
-| `autoRecall` | `true` | 回答前自动召回 |
-| `autoCapture` | `true` | 回合结束后自动写入事件 |
-| `autoBuild` | `true` | 在压缩上下文前、会话结束时自动构建 |
-| `minPromptLength` | `4` | 跳过短于该长度的查询 |
-| `timeoutMs` | `8000` | HTTP 请求超时时间，单位为毫秒 |
+| `sidecarUrl` | `http://127.0.0.1:8787` | Memory service URL |
+| `recallConversationId` | `""` | Empty uses the current conversation; otherwise specifies a conversation for recall |
+| `autoRecall` | `true` | Recall memories before responses |
+| `autoCapture` | `true` | Capture events after turns |
+| `autoBuild` | `true` | Construct memory before compaction and at session end |
+| `minPromptLength` | `4` | Skip queries shorter than this length |
+| `timeoutMs` | `8000` | HTTP request timeout in milliseconds |
 
-`buildEveryTurns`、`searchAllFallback` 和 `recallMinHits` 为 `index.js` 中的内置参数，当前配置 schema 不接受这三个字段。周期构建位于 `autoCapture` 流程中，因此仅关闭 `autoBuild` 不会关闭周期构建。
+`buildEveryTurns`, `searchAllFallback`, and `recallMinHits` are built-in parameters in `index.js`; the current configuration schema does not accept these fields. Periodic construction is part of the `autoCapture` flow, so disabling `autoBuild` alone does not disable periodic construction.
 
-## 记忆工具与 HTTP 接口
+## Memory tools and HTTP endpoints
 
-| 工具 / 操作 | 功能 | HTTP 接口 |
+| Tool / operation | Purpose | HTTP endpoint |
 | --- | --- | --- |
-| `cogmem_search` | 返回相关记忆摘要及标识 | `POST /v1/openclaw/recall` |
-| `cogmem_get` | 按标识获取完整条目 | `POST /v1/openclaw/get` |
-| `cogmem_timeline` | 获取 Episode 内按序排列的记忆 | `POST /v1/openclaw/timeline` |
-| `cogmem_status` | 查看会话或全库状态 | `GET /v1/status` |
-| `cogmem_build` | 触发长期记忆构建 | `POST /v1/build` |
-| 自动写入 | 导入 OpenClaw 事件 | `POST /v1/openclaw/ingest` |
+| `cogmem_search` | Return relevant excerpts and identifiers | `POST /v1/openclaw/recall` |
+| `cogmem_get` | Retrieve a stored item by identifier | `POST /v1/openclaw/get` |
+| `cogmem_timeline` | Retrieve ordered memories within an Episode | `POST /v1/openclaw/timeline` |
+| `cogmem_status` | Inspect conversation or store status | `GET /v1/status` |
+| `cogmem_build` | Trigger long-term memory construction | `POST /v1/build` |
+| Automatic capture | Import OpenClaw events | `POST /v1/openclaw/ingest` |
 
-渐进检索流程为：`cogmem_search` 获取摘要及 `id` / `episode_id`，再使用 `cogmem_get` 或 `cogmem_timeline` 补充细节。工具使用说明见 [记忆工具指南](openclaw-cogmem/skill/cogmem-memory-guide/SKILL.md)。
+Progressive retrieval starts with `cogmem_search` for excerpts and `id` / `episode_id`, followed by `cogmem_get` or `cogmem_timeline` for additional detail. See the [memory tool guide](openclaw-cogmem/skill/cogmem-memory-guide/SKILL.md).
 
-sidecar 还提供通用事件写入、上下文召回和偏好提取接口，具体请求结构可查看运行中的 `/docs` 页面。
+The sidecar also provides generic event ingestion, context retrieval, and preference extraction endpoints. See the running service's `/docs` page for request schemas.
 
-## 导入历史会话
+## Import conversation history
 
-运行仓库自带的最小 OpenClaw 日志示例：
+Run the bundled minimal OpenClaw log example:
 
 ```bash
 python cogmem-core/examples/ingest_openclaw_log.py
 ```
 
-或指定自己的 JSONL 会话日志与存储目录：
+Or specify your own JSONL session log and storage directory:
 
 ```bash
 python cogmem-core/examples/ingest_openclaw_log.py /path/to/session.jsonl --store ./cogmem_store
 ```
 
-该脚本直接调用 Python 核心，依次完成事件转换、写入、构建和示例召回，无需启动 sidecar。
+The script calls the Python core directly to convert events, ingest them, construct memory, and run an example query. The sidecar does not need to be running.
 
-## 可选 LLM 构建
+## Optional LLM-assisted construction
 
-默认使用启发式 / 词法判定完成 Episode 切分和 Trajectory 聚类。若需启用 LLM 判定，在启动 Python 程序或 sidecar **之前**设置以下环境变量：
+By default, Episode segmentation and Trajectory clustering use heuristic / lexical judgments. To enable LLM judgments, set the following environment variables **before** starting the Python application or sidecar:
 
-| 环境变量 | 设置值 / 说明 |
+| Environment variable | Value / description |
 | --- | --- |
-| `COGMEM_EPISODE_BUILDER` | `locomo_llm`，启用 LLM Episode 切分 |
-| `COGMEM_TRAJECTORY_BUILDER` | `locomo_llm`，启用 LLM Trajectory 归类 |
-| `COGMEM_LLM_BASE_URL` | 模型服务的 API 基础地址；代码会追加 `/chat/completions` |
-| `COGMEM_LLM_API_KEY` | 模型服务的访问密钥 |
-| `COGMEM_LLM_MODEL` | 模型名称 |
-| `COGMEM_LLM_TIMEOUT` | 可选，请求超时秒数，默认 `120` |
+| `COGMEM_EPISODE_BUILDER` | `locomo_llm` to enable LLM-assisted Episode segmentation |
+| `COGMEM_TRAJECTORY_BUILDER` | `locomo_llm` to enable LLM-assisted Trajectory classification |
+| `COGMEM_LLM_BASE_URL` | Model service API base URL; the client appends `/chat/completions` |
+| `COGMEM_LLM_API_KEY` | Model service API key |
+| `COGMEM_LLM_MODEL` | Model name |
+| `COGMEM_LLM_TIMEOUT` | Optional request timeout in seconds; defaults to `120` |
 
-基础地址、密钥、模型名称未配齐时，`locomo_llm` 会回退到默认 `locomo` 构建方式。事件写入与在线召回流程本身不调用 LLM。
+If the base URL, API key, or model name is missing, `locomo_llm` falls back to the default `locomo` implementation. Event ingestion and online recall do not themselves call an LLM.
 
-## 开发与测试
+## Development and testing
 
-安装开发依赖并运行现有测试：
+Install development dependencies and run the existing tests:
 
 ```bash
 python -m pip install -e "./cogmem-core[dev]"
 python -m unittest discover -s cogmem-core/tests -v
 ```
 
-仓库结构：
+Repository layout:
 
 ```text
 .
 ├── cogmem-core/
-│   ├── src/cogmem_core/       Python 核心、sidecar 与随包分发的插件
-│   ├── examples/             使用示例
-│   ├── scripts/              构建等辅助脚本
-│   └── tests/                核心与接口测试
-├── openclaw-cogmem/           OpenClaw 插件源码
-├── docs/                     架构图与自动化说明
+│   ├── src/cogmem_core/       Python core, sidecar, and bundled plugin
+│   ├── examples/             Usage examples
+│   ├── scripts/              Build and maintenance scripts
+│   └── tests/                Core and API tests
+├── openclaw-cogmem/           OpenClaw plugin source
+├── docs/                     Architecture diagrams and lifecycle documentation
 ├── LICENSE
-└── README.md
+├── README.md                 English documentation (default)
+└── README.zh-CN.md           Chinese documentation
 ```
 
-修改插件时需注意：`cogmem openclaw-install` 使用的是 `cogmem-core/src/cogmem_core/data/openclaw_plugin/` 内的随包副本。发布前应保持其与顶层 `openclaw-cogmem/` 源码一致。
+When modifying the plugin, note that `cogmem openclaw-install` uses the bundled copy in `cogmem-core/src/cogmem_core/data/openclaw_plugin/`. Keep it synchronized with the top-level `openclaw-cogmem/` source before publishing.
 
-欢迎通过开源托管平台的 Issue 和 Pull Request 反馈问题、补充文档或提交改进。问题报告建议附上运行环境、复现步骤及脱敏日志；代码改动请附上相应验证结果。
+Issues and pull requests are welcome for bug reports, documentation, and improvements. Include your environment, reproduction steps, and sanitized logs in bug reports, and describe validation performed for code changes.
 
-## 当前实现范围
+## Current scope
 
-- 当前版本为 `0.3.0`，提供本地文件存储和 OpenClaw 适配；其他平台可通过 Python API 或 HTTP 接口集成。
-- 默认 Episode / Trajectory 判定与偏好提取依赖启发式规则，召回与构建效果需结合实际数据评估。
-- Tool Execution Memory 为可选能力，Python 核心默认关闭。
+- Version `0.3.0` provides local file storage and an OpenClaw adapter. Other platforms can integrate through the Python API or HTTP endpoints.
+- Default Episode / Trajectory judgments and preference extraction rely on heuristics. Evaluate construction and retrieval quality with your own data.
+- Tool Execution Memory is optional and disabled by default in the Python core.
 
-## 文档
+## Documentation
 
-- [Python 核心说明](cogmem-core/README.md)
-- [OpenClaw 插件说明](openclaw-cogmem/README.md)
-- [自动化流程说明](docs/cogmem_automation_explained_zh.md)
-- [OpenClaw 集成审查与待改进项](docs/openclaw_review_2026-09-29.md)
-- [项目架构图](docs/cogmem_plugin_architecture.svg)
+Supporting documents currently include Chinese or mixed Chinese/English content.
 
-## 许可证
+- [Python core](cogmem-core/README.md)
+- [OpenClaw plugin](openclaw-cogmem/README.md)
+- [Automatic memory lifecycle](docs/cogmem_automation_explained_zh.md)
+- [OpenClaw integration review and known issues](docs/openclaw_review_2026-09-29.md)
+- [Architecture diagram](docs/cogmem_plugin_architecture.svg)
 
-本项目采用 [MIT License](LICENSE)。
+## License
+
+This project is licensed under the [MIT License](LICENSE).
